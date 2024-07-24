@@ -2,7 +2,8 @@ import {redirect} from 'next/navigation'
 import { PrismaClient} from '@prisma/client'
 import { cookies } from "next/headers";
 import { createSnip } from '../actions';
-
+import { editor } from 'monaco-editor';
+//TO DO: YOU NEED TO MAKE THIS A SERVER SIDE COMPONENT, ADD THE EDITOR, AND LINK THE USER ID WITHOUT USING PRISMA OR COOKIES SINCE THATS SERVER SIDE
 const prisma = new PrismaClient()
 export default async function CreateSnip(){
     const userId = cookies().get("user_id")?.value
