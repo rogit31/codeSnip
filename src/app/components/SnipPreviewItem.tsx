@@ -1,13 +1,13 @@
-"use client"
-
+import { cookies } from 'next/headers';
+import SnipActions from './SnipActions';
 import Link from 'next/link';
-import { deleteSnipById } from '@/app/actions';
 
 interface Snip {
     id: number;
     title: string;
     code: string;
     language: string;
+    authorId: string;
 }
 
 interface SnipPreviewItemProps {
@@ -15,30 +15,20 @@ interface SnipPreviewItemProps {
 }
 
 export default function SnipPreviewItem({ snip }: SnipPreviewItemProps) {
+    const userId = cookies().get("user_id")?.value as string;
+
     return (
         <div className="snipPreviewItem" key={snip.id}>
+            <Link href={`view-snip/${snip.id}`}>
             <h3 className='snipPreviewTitle'>{snip.title}</h3>
-            <p className='snipPreviewCode'>{snip.code}</p>
-            <p className='snipPreviewLanguage'>{snip.language}</p>
-            <div className='snipPreviewActionsWrapper'>
-                <Link href={`edit-snip/${snip.id}`}>
-                    <button type="button">
-                        <img src="/editIcon.svg" alt="Edit" />
-                    </button>
-                </Link>
-                <form className='snipPreviewIcon' action={deleteSnipById} onSubmit={handleDelete} method='post'>
-                    <input type="hidden" name='id' value={snip.id} />
-                    <button type="submit">
-                        <img src="/trashIcon.svg" alt="Delete" />
-                    </button>
-                </form>
-            </div>
+                <p className='snipPreviewCode'>{snip.code}</p>
+                <p className='snipPreviewLanguage'>{snip.language}</p>
+            </Link>
+            {userId && userId == snip.authorId ? (
+                <SnipActions snipData={snip} />
+            ) : null}
         </div>
     );
-
-    function handleDelete(event: React.FormEvent<HTMLFormElement>) {
-        if (!confirm("Are you sure you want to delete this snip?")) {
-            event.preventDefault();
-        }
-    }
 }
+//TODO for some reason despite userId and snip.authorId being the same here, the SnipActions don't appear with strict comparison. They're not the same type but why?
+

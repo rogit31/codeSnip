@@ -19,10 +19,11 @@ export default function Header(){
                     <Link className="topNavLink" href='/'>Home</Link>
                 </li>
                 <li>
-                    <Link className="topNavLink" href="/create-snip">Create Snip</Link>
+                    {userId? <Link className="topNavLink" href="/create-snip">Create Snip</Link> : '' }
+                    
                 </li>
                 <li>
-                    <Link className="topNavLink" href="/your-snips">Your Snips</Link>
+                    {userId? <Link className="topNavLink" href="/your-snips">Your Snips</Link> : ''}
                 </li>
                 </span>
                 <span className="topNavGroupWrapper">

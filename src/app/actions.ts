@@ -163,7 +163,7 @@ export async function login(formData: FormData){
         console.error("Error authenticating."+ error);
         return false;
     }
-    redirect("/")
+    redirect("/");
 }
 
 export async function logout(){

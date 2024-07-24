@@ -10,9 +10,13 @@ export default async function Home() {
     </div>
     <Searchbar></Searchbar>
     <SnipsPreview></SnipsPreview>
-    
     </>
 
   
   )
 };
+
+//TODO: You're missing middleware, it would make sense for the edit and delete buttons to be included in the view-snip page, but it's currently not working. 
+//You've also got a lot of type anys to fix.
+//TODO: Oh also the search bar is currently non-functional
+//TODO: Also also, integrate the code editor monaco for the actual editing. 
