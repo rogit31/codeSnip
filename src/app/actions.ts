@@ -32,27 +32,27 @@ export async function getSnipById(id:number):Promise<Snip | null>{
 }
 
 export async function createSnip(formData: FormData){
-
-    const authorId = Number(formData.get("userId"));
+    console.log(formData);
+    const authorId = parseInt(formData.get("userId") as string);
     try{
         const snip = await prisma.snip.create({
             data:{
                 title: formData.get("title") as string,
-                code: formData.get("title") as string,
-                language: formData.get("title") as string,
+                code: formData.get("snippetContent") as string,
+                language: formData.get("language") as string,
                 authorId: authorId,
             }
         })
         
     }
     catch{
-        console.error('Failed in creating snip.')
+        console.error('Failed in creating snip.' + authorId)
+        console.error(formData.get("userId"));
     }
-    redirect('/app')
+    redirect('/app');
 }
 
 export async function deleteSnipById(formData: FormData){
-    //TODO: CURRENTLY THIS STUPID SHIT ISN'T CORRECTLY INPUTTING THE USERID AS AUTHORID INTO THE DATABASE, IT'S PISSING ME OFF. FIX IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIT
     const snipId = formData.get('id') as string;
         try{
             await prisma.snip.delete({

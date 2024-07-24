@@ -12,8 +12,8 @@ model Snip {
   title    String
   code     String
   language String
-  authorId Int?
-  author   User?  @relation(fields: [authorId], references: [id])
+  authorId Int
+  author   User  @relation(fields: [authorId], references: [id])
 }
 
 model User {
