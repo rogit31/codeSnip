@@ -12,7 +12,7 @@ export default function SnipActions({snipData} :any){
                 <img src="/editIcon.svg" alt="Edit" />
             </button>
         </Link>
-        <form className='snipPreviewIcon' onSubmit={handleDelete} method='post'>
+        <form className='snipPreviewIcon' action={deleteSnipById} onSubmit={handleDelete} method='post'>
             <input type="hidden" name='id' value={snipData.id} />
             <button type="submit">
                 <img src="/trashIcon.svg" alt="Delete" />
@@ -22,9 +22,8 @@ export default function SnipActions({snipData} :any){
         </>
     )
     function handleDelete(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        if (confirm("Are you sure you want to delete this snip?")) {
-            deleteSnipById(snipData.id);
+        if (!confirm("Are you sure you want to delete this snip?")) {
+            event.preventDefault();
         }
     }
 }
