@@ -9,7 +9,7 @@ interface Snip{
     id:number,
     title:string,
     code:string,
-    language:string | null
+    language:string
 }
 interface User{
     id: number,
@@ -54,7 +54,7 @@ export async function createSnip(formData: FormData){
 export async function  updateSnip(formData: FormData) {
 
     const title = formData.get("title") as string;
-    const code = formData.get("snippetContent") as string;
+    const code = formData.get("code") as string;
     const language = formData.get("language") as string;
     const snipId = Number(formData.get("snipId") as string);
 

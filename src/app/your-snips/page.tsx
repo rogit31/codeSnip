@@ -13,6 +13,7 @@ const snips = await prisma.snip.findMany({where:{
     return(
         <>
         <div className='snipPreviewWrapper'>
+            {snips.length === 0? "No snips yet :(" : ''}
             {snips.map((snip:any) => (
                 <SnipPreviewItem key={snip.id} snip={snip} />
 ))}
@@ -20,4 +21,3 @@ const snips = await prisma.snip.findMany({where:{
         </>
     )
 }
-//TODO: Test if this actually works by making another account, making a snip and checking if it works. 
