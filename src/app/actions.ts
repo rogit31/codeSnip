@@ -31,14 +31,14 @@ export async function getSnipById(id:number):Promise<Snip | null>{
     return null;
 }
 
-export async function createSnip(formData: FormData, code:any){
+export async function createSnip(formData: FormData){
     const userId = Number(cookies().get("user_id")?.value as string);
     
     try{
         const snip = await prisma.snip.create({
             data:{
                 title: formData.get("title") as string,
-                code: formData.get("snippetContent") as string,
+                code: formData.get("code") as string,
                 language: formData.get("language") as string,
                 authorId: userId,
             }
@@ -50,6 +50,24 @@ export async function createSnip(formData: FormData, code:any){
         console.error(formData.get("userId"));
     }
     redirect('/');
+}
+export async function  updateSnip(formData: FormData) {
+
+    const title = formData.get("title") as string;
+    const code = formData.get("snippetContent") as string;
+    const language = formData.get("language") as string;
+    const snipId = Number(formData.get("snipId") as string);
+
+     await prisma.snip.update({
+        where: {
+            id: snipId
+        },
+        data: {
+            title: title, code: code, language: language
+        }
+    });
+    redirect ('/');
+
 }
 
 export async function deleteSnipById(formData: FormData){

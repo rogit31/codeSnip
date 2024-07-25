@@ -15,7 +15,6 @@ export default async function ViewSnip({ params }: any) {
     let snipData: any = null;
     const snipId = Number(params.id);
 
-
     async function getSnip(id: number) {
         try {
             return await prisma.snip.findUnique({

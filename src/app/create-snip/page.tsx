@@ -1,39 +1,33 @@
 "use client"
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { PrismaClient} from '@prisma/client'
 import { createSnip } from '../actions';
 import Editor from '@monaco-editor/react';
 
-//TODO: Need to somehow extract the monaco editor data, probably using state now that we've moved the onus of finding the user.id onto the server action,
-// I can just use state and pass that to the createSnip function? Not sure if I should make all of the editables like that, probably doesn't matter.
+//TODO: Still need to find a way to change the language. From a UX perspective, changing the language of the snip should trigger the language of the monaco editor to change as well. 
+//Also would be nice if the code could be tested, but that involves most likely some kind of third party reliance which kinda sucks. 
+//Also also, the editor currently erases white space and line returns. There should be some kind of setting for this surely. 
 
 const prisma = new PrismaClient()
-export default async function CreateSnip(){
-    const editorRef = useRef(null);
-
-
-    function handleSubmit(event:any){
-        if(editorRef.current.getValue() === null){
-            event?.preventDefault;
-        }
-        
-    }
-    
+export default function CreateSnip(){
+const [code, setCode] = useState('');
     return(
         <>
-        <form className="createSnippet" action={createSnip(data, code)} onSubmit={handleSubmit()} method="POST">
+        <form className="createSnippet" action={createSnip} method="POST">
             <label htmlFor="title">Title</label>
             <input type="text" name="title" id="title"/>
 
-            <label htmlFor="snippetContent">Code</label>
-            <textarea name="snippetContent" id="snippetContent"></textarea>
+            <label htmlFor="monaco-editor">Code</label>
+            <input type="hidden"value={code} name='code' id='code'/>
             <Editor
+            theme='vs-dark'
             height="50vh"
             defaultLanguage='JavaScript'
             defaultValue='//Write your code here'
+            value={code}
+            onChange={(value:any)=> setCode(value)}
             />
-
             <label htmlFor="language">Language</label>
             <select name="language" id="language">
                 <option value="CSS">CSS</option>
