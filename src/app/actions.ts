@@ -99,7 +99,7 @@ export async function registerUser(formData: FormData){
                 username: username,
                 password: hash,
                 email: email,
-                role: username,
+                role: "user",
             }
         })
         
@@ -170,7 +170,6 @@ export async function login(formData: FormData){
                 username: username
             }
         })
-        console.log(user);
         const userId = String(user.id);
         const userRole = String(user.role);
         cookies().set("user_id", userId, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
