@@ -16,6 +16,5 @@ export default async function Home() {
   )
 };
 
-//TODO: You're missing middleware, it would make sense for the edit and delete buttons to be included in the view-snip page, but it's currently not working. 
+//TODO: It would make sense for the edit and delete buttons to be included in the view-snip page, but it's currently not working. 
 //You've also got a lot of type anys to fix.
-//TODO: Oh also the search bar is currently non-functional

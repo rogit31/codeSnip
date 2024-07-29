@@ -1,14 +1,53 @@
+"use client";
 
-export default function Searchbar(){
-    return(
+import { getSnipByTitle } from "../actions";
+import { useState } from "react";
+import Link from 'next/link';
+
+export default function Searchbar() {
+    const [input, setInput] = useState('');
+    const [snipResults, setSnipResults] = useState([]);
+
+    const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setInput(value);
+
+        if (value.length> 1) {
+            const results = await getSnipByTitle(value);
+            setSnipResults(results);
+        } else {
+            setSnipResults([]);
+        }
+    };
+
+    return (
         <>
-        <form action="#" method="get" className="searchBar">
-            <label htmlFor="searchBar"></label>
-            <div className="inputWrapper">
-                <input type="text" autoComplete="off" name="query" placeholder="Search for snips..." aria-label="Search" />
-                <button type="submit"><div className="searchIcon"></div></button>
+            <div className="searchBar">
+                <label htmlFor="searchBar"></label>
+                <div className="inputWrapper">
+                    <input 
+                        type="text" 
+                        autoComplete="off" 
+                        name="query" 
+                        placeholder="Search for snips..." 
+                        aria-label="Search" 
+                        value={input} 
+                        onChange={handleInputChange}
+                    />
+                    <button type="button">
+                        <div className="searchIcon"></div>
+                    </button>
+                </div>
             </div>
-        </form>
+            <div className="searchResults">
+                {snipResults.map((item: any) => (
+                    <div key={item.id} className="searchResult">
+                        <Link href={`view-snip/${item.id}`}>
+                            {item.title}
+                        </Link>
+                    </div>
+                ))}
+            </div>
         </>
-    )
+    );
 }

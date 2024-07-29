@@ -35,7 +35,6 @@ export default function EditSnip({ params }: any) {
 
     return (
         <>
-            <p>{params.id}</p>
             <form className="createSnippet" action={updateSnip} method="post">
                 <label htmlFor="title">Title</label>
                 <input type="text" name="title" id="title" defaultValue={snip.title} />
