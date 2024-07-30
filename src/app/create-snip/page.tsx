@@ -12,9 +12,10 @@ import Editor from '@monaco-editor/react';
 const prisma = new PrismaClient()
 export default function CreateSnip(){
 const [code, setCode] = useState('');
+const [errorMessage, setErrorMessage] = useState('');
     return(
         <>
-        <form className="createSnippet" action={createSnip} method="POST">
+        <form className="createSnippet" action={validateForm} method="POST">
             <label htmlFor="title">Title</label>
             <input type="text" name="title" id="title"/>
 
@@ -45,7 +46,20 @@ const [code, setCode] = useState('');
                 <option value="Other">Other</option>
             </select>
             <button className="createSnippetSubmit"><input type="submit"/></button>
+            <p>{errorMessage}</p>
         </form>
         </>
     )
+    async function validateForm(formData:FormData){
+   
+        const title = formData.get("title");
+        const code = formData.get("code");
+        if(!title || !code){
+            setErrorMessage("Missing title or code!");
+            event?.preventDefault;
+        }
+        else{
+            createSnip(formData);
+        }
+    }
 }

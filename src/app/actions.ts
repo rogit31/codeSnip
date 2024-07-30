@@ -198,7 +198,6 @@ export async function login(formData: FormData){
 }
 
 export async function logout(){
-    console.log("click");
     cookies().delete("user_id");
     cookies().delete("user_role");
     cookies().delete("username");

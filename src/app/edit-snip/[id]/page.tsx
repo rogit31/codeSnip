@@ -15,6 +15,7 @@ export default function EditSnip({ params }: any) {
     const snipId = Number(params.id);
     const [code, setCode] = useState('');
     const [snip, setSnip] = useState<Snip | null>(null);
+    const [errorMessage, setErrorMessage] =useState("");
 
     useEffect(() => {
         getSnipById(snipId)
@@ -35,7 +36,7 @@ export default function EditSnip({ params }: any) {
 
     return (
         <>
-            <form className="createSnippet" action={updateSnip} method="post">
+            <form className="createSnippet" action={formValidation} method="post">
                 <label htmlFor="title">Title</label>
                 <input type="text" name="title" id="title" defaultValue={snip.title} />
 
@@ -66,7 +67,21 @@ export default function EditSnip({ params }: any) {
                 </select>
                 <input type="hidden" value={snipId} name='snipId' id='snipId' />
                 <button className="createSnippetSubmit"><input type="submit" /></button>
+                <p>{errorMessage}</p>
             </form>
         </>
     );
+
+    async function formValidation(formData:FormData){
+        const title = formData.get("title");
+        const code = formData.get("code");
+        if(!title || !code){
+            event?.preventDefault;
+            setErrorMessage("Title or code cannot be empty.")
+        }
+        else{
+            updateSnip(formData);
+        }
+    }
+
 }
