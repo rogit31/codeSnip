@@ -12,7 +12,7 @@ export default function SnipActions({snipData} :any){
                 <img src="/editIcon.svg" alt="Edit" />
             </button>
         </Link>
-        <form className='snipPreviewIcon' action={deleteSnipById} onSubmit={handleDelete} method='post'>
+        <form className='snipPreviewIcon' action={deleteSnipById} onSubmit={handleDelete}>
             <input type="hidden" name='id' value={snipData.id} />
             <button type="submit">
                 <img src="/trashIcon.svg" alt="Delete" />

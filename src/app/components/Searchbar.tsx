@@ -23,12 +23,13 @@ export default function Searchbar() {
     return (
         <>
             <div className="searchBar">
-                <label htmlFor="searchBar"></label>
+                <label htmlFor="query"></label>
                 <div className="inputWrapper">
                     <input 
                         type="text" 
                         autoComplete="off" 
-                        name="query" 
+                        name="query"
+                        id="query" 
                         placeholder="Search for snips..." 
                         aria-label="Search" 
                         value={input} 

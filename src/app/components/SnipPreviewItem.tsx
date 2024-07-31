@@ -21,7 +21,7 @@ export default function SnipPreviewItem({ snip }: SnipPreviewItemProps) {
         <div className="snipPreviewItem" key={snip.id}>
             <Link href={`view-snip/${snip.id}`}>
             <h3 className='snipPreviewTitle'>{snip.title}</h3>
-                <p className='snipPreviewCode'>{snip.code}</p>
+                <textarea className='snipPreviewCode' rows={3} name="snippetContent" defaultValue={snip.code} readOnly></textarea>
                 <p className='snipPreviewLanguage'>{snip.language}</p>
             </Link>
             {userId && userId == snip.authorId ? (

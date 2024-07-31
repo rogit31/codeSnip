@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
 }
 export const config = {
     matcher: [
-      '/((?!_next|api/auth).*)(.+)'
+      '/((?!_next|api/auth|view-snip).*)(.+)',
     ],
   }
 

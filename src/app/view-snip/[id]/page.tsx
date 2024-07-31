@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import {redirect} from 'next/navigation';
 import SnipActions from '@/app/components/SnipActions';
+import { getSnipById } from '@/app/actions';
+import { cookies } from 'next/headers';
 
 const prisma = new PrismaClient();
 
@@ -14,21 +15,8 @@ interface Snip {
 export default async function ViewSnip({ params }: any) {
     let snipData: any = null;
     const snipId = Number(params.id);
-
-    async function getSnip(id: number) {
-        try {
-            return await prisma.snip.findUnique({
-                where: {
-                    id: id,
-                },
-            });
-        } catch (error) {
-            console.error('Error fetching snip:', error);
-            return null;
-        }
-    }
-
-    snipData = await getSnip(snipId);
+    snipData = await getSnipById(snipId);
+    const userId = cookies().get("user_id")?.value as string;
 
     if (snipData) {
         return (
@@ -41,7 +29,8 @@ export default async function ViewSnip({ params }: any) {
                     <textarea name="snippetContent" id="snippetContent" defaultValue={snipData.code} readOnly></textarea>
 
                     <label htmlFor="language">Language</label>
-                    <input type="text" readOnly defaultValue={snipData.language} />
+                    <input type="text" readOnly defaultValue={snipData.language} id='language'/>
+                    {userId == snipData.authorId ?  <SnipActions snipData = {snipData}/> : ''}
                 </div>
             </>
         );

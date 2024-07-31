@@ -15,7 +15,6 @@ export default async function Home() {
   
   )
 };
-
-//TODO: It would make sense for the edit and delete buttons to be included in the view-snip page, but it's currently not working. 
-//You've also got a lot of type anys to fix.
-//TODO: Check for XSS vulnerabilities, thought it seems they don't exist?
+ 
+//TODO:You've also got a lot of type anys to fix.
+//TODO: Either make the username in the header an actual link to a profile page or make it non-interactive
