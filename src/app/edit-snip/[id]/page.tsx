@@ -1,4 +1,5 @@
 "use client"
+
 import { useState, useEffect } from 'react';
 import { Editor } from '@monaco-editor/react';
 import { updateSnip, getSnipById } from '../../actions';
@@ -90,5 +91,4 @@ export default function EditSnip({ params }: any) {
             updateSnip(formData);
         }
     }
-
 }

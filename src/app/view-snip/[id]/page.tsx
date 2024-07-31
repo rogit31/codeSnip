@@ -1,16 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import SnipActions from '@/app/components/SnipActions';
 import { getSnipById } from '@/app/actions';
 import { cookies } from 'next/headers';
-
-const prisma = new PrismaClient();
-
-interface Snip {
-    id: number;
-    title: string;
-    code: string;
-    language: string;
-}
 
 export default async function ViewSnip({ params }: any) {
     let snipData: any = null;

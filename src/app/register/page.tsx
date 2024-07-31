@@ -1,8 +1,10 @@
 "use client"
+
 import { useState } from 'react';
 import { registerUser } from '../actions';
 import { checkForUniqueUsername } from '../actions';
-import Link from 'next/link'
+import Link from 'next/link';
+
 export default function Register(){
     const [errorMessage, setErrorMessage] = useState('');
     return (

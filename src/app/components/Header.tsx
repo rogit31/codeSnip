@@ -1,7 +1,6 @@
 import { cookies } from "next/headers"
 import "./../globals.css"
 import Link from 'next/link';
-import { logout } from "../actions";
 import ProfileLogout from "./ProfileLogout";
 
 

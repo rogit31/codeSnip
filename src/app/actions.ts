@@ -1,8 +1,10 @@
 "use server"
+
 import bcrypt from "bcryptjs-react";
 import { redirect} from "next/navigation";
 import { PrismaClient, Prisma } from '@prisma/client'
 import { cookies } from "next/headers";
+
 const prisma = new PrismaClient()
 
 interface Snip{
@@ -11,6 +13,7 @@ interface Snip{
     code:string,
     language:string
 }
+
 interface User{
     id: number,
     username: string,
@@ -46,8 +49,9 @@ export async function getSnipByTitle(title:string):Promise<any>{
 }
 
 export async function createSnip(formData: FormData){
+
     const userId = Number(cookies().get("user_id")?.value as string);
-    
+
     try{
         const snip = await prisma.snip.create({
             data:{
@@ -56,15 +60,17 @@ export async function createSnip(formData: FormData){
                 language: formData.get("language") as string,
                 authorId: userId,
             }
-        })
-        
+        })   
     }
+
     catch{
         console.error('Failed in creating snip.' + userId)
         console.error(formData.get("userId"));
     }
+
     redirect('/');
 }
+
 export async function updateSnip(formData: FormData) {
 
     const title = formData.get("title") as string;
@@ -80,12 +86,14 @@ export async function updateSnip(formData: FormData) {
             title: title, code: code, language: language
         }
     });
-    redirect ('/');
 
+    redirect ('/');
 }
 
 export async function deleteSnipById(formData: FormData){
+
     const snipId = formData.get('id') as string;
+
         try{
             await prisma.snip.delete({
                 where: {
@@ -93,13 +101,16 @@ export async function deleteSnipById(formData: FormData){
                 }
             })
         }
+
         catch (error) {
             console.error("couldn't delete the snip.", error);
         }
+
         redirect ('/')
 }
 
 export async function registerUser(formData: FormData){
+
     const username = formData.get("username") as string;
     const passwordPlain = formData.get("password") as string;
     const email = formData.get("email") as string;
@@ -115,17 +126,19 @@ export async function registerUser(formData: FormData){
                 email: email,
                 role: "user",
             }
-        })
-        
+        })  
     }
+
     catch(error){
         console.error("Error creating user." + {error});
         return false;
     }
+
     redirect('/login');
 }
 
 export async function checkForUniqueUsername(formData: FormData){
+
     const username = formData.get("username") as string;
     const user = prisma.user.findUnique({
         where: {
@@ -141,8 +154,10 @@ export async function checkForUniqueUsername(formData: FormData){
 }
 
 export async function checkPasswordHash(formData: FormData){
+
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
+
     try{
         const user = await prisma.user.findUniqueOrThrow({
             where:{
@@ -157,6 +172,7 @@ export async function checkPasswordHash(formData: FormData){
             return false;
         }
     }
+
     catch(error){
         console.error("Error checking password." + error);
         return false;
@@ -164,6 +180,7 @@ export async function checkPasswordHash(formData: FormData){
 }
 
 export async function checkLoginCredentials(formData: FormData): Promise<boolean>{
+
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
 
@@ -177,7 +194,9 @@ export async function checkLoginCredentials(formData: FormData): Promise<boolean
 }
 
 export async function login(formData: FormData){
+
     const username = formData.get("username") as string; 
+
     try{
         const user = await prisma.user.findFirstOrThrow({
             where:{
@@ -194,6 +213,7 @@ export async function login(formData: FormData){
         console.error("Error authenticating."+ error);
         return false;
     }
+    
     redirect("/");
 }
 
